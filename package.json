@@ -1,0 +1,19 @@
+{
+  "name": "conso",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keniusuannai/conso.git"
+  },
+  "author": "tagee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tageecc/conso/issues"
+  },
+  "homepage": "https://github.com/tageecc/conso#readme"
+}

@@ -1,4 +1,4 @@
-export default class Router {
+module.exports = class Router {
     constructor() {
 
     }
@@ -18,4 +18,4 @@ export default class Router {
         return function (target, key, descriptor) {
         }
     }
-}
+};

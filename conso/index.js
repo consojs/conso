@@ -4,7 +4,7 @@ let http = require('http');
 let Emitter = require('events');
 let Router = require('./lib/Router');
 let Scanner = require('./lib/Scanner');
-
+let Util = require('./lib/Util');
 
 class Application extends Emitter {
     constructor(server) {
@@ -18,10 +18,11 @@ class Application extends Emitter {
 
     init() {
         // const scanner = new Scanner(this.annotations.basePackage)
-        let klass = [];
         let dirList = fs.readdirSync('./router/');
         dirList.map(file => {
-            console.log(file)
+            console.log('file:', file);
+            let tmp = Util.autoLoad('./router');
+            console.log(tmp.toString());
         });
     }
 
@@ -39,4 +40,4 @@ class Application extends Emitter {
 }
 
 
-export {Router, Scanner, Application};
+module.exports = {Router, Scanner, Application};

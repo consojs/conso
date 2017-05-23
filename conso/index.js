@@ -3,10 +3,8 @@ import fs from 'fs';
 import http from 'http';
 import Emitter from 'events';
 import Router from './lib/Router';
-import Debug from 'debug'
 import Scanner from './lib/Scanner';
 
-const debug = new Debug('conso:application');
 
 class Application extends Emitter {
     constructor(server) {
@@ -15,10 +13,16 @@ class Application extends Emitter {
             this,
             {server: server},
             JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
+        // this.init();
+    }
+
+    init() {
+        if (this.annotations.enable) {
+            const scanner = new Scanner(this.annotations.basePackage)
+        }
     }
 
     run() {
-        debug('listen');
         const server = this.server || http.createServer(this.callback());
         return server.listen(this.port || 4600);
     }
@@ -26,8 +30,6 @@ class Application extends Emitter {
     callback() {
         return (req, res) => {
             res.writeHead(200, {'Content-Type': 'text/plain'});
-
-            // 发送响应数据 "Hello World"
             res.end('Hello Conso\n');
         };
     }

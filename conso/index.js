@@ -1,9 +1,9 @@
-import path from 'path';
-import fs from 'fs';
-import http from 'http';
-import Emitter from 'events';
-import Router from './lib/Router';
-import Scanner from './lib/Scanner';
+let path = require('path');
+let fs = require('fs');
+let http = require('http');
+let Emitter = require('events');
+let Router = require('./lib/Router');
+let Scanner = require('./lib/Scanner');
 
 
 class Application extends Emitter {
@@ -13,13 +13,16 @@ class Application extends Emitter {
             this,
             {server: server},
             JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
-        // this.init();
+        this.init();
     }
 
     init() {
-        if (this.annotations.enable) {
-            const scanner = new Scanner(this.annotations.basePackage)
-        }
+        // const scanner = new Scanner(this.annotations.basePackage)
+        let klass = [];
+        let dirList = fs.readdirSync('./router/');
+        dirList.map(file => {
+            console.log(file)
+        });
     }
 
     run() {

@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/tageecc/conso#readme",
   "devDependencies": {
-    "babel-register": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4"
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-latest": "^6.24.1"
+  },
+  "dependencies": {
+    "debug": "^2.6.8"
   }
 }

@@ -1,13 +1,9 @@
-import {Routers,RouterMapping} from 'conso';
+import {Router} from './conso';
+let router = new Router();
 
-export default class Router extends Routers{
-
-	constructor(props){
-		super(props);
-	}
-
-	@RouterMapping({name="/",method="get"})
-	index(req,res){
-		res.render('index',{title:'new conso website!'});
-	}
+export default class Router {
+    @router.get('/getinit')
+    init() {
+        console.log(123);
+    }
 }

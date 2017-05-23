@@ -1,0 +1,15 @@
+{
+    "project": "conso",
+    "host": "localhost",
+    "port": 4600,
+    "publicDir":"./public",
+    "dbConfig": {
+        "host": "localhost",
+        "port": 5984,
+        "dbName": "customers"
+    },
+    "annotations": {
+        "enable":false,
+        "basePackage":"./route"
+    }
+}

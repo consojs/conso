@@ -2,9 +2,11 @@ let path = require('path');
 let fs = require('fs');
 let http = require('http');
 let Emitter = require('events');
-let State = require('./lib/state');
+let debug = require('debug')('conso:application');
+let State = require('./lib/State');
 let Router = require('./lib/Router');
-let Scanner = require('./lib/Scanner');
+let Request = require('./lib/Request');
+let Response = require('./lib/Response');
 let Util = require('./lib/Util');
 
 class Application extends Emitter {
@@ -14,7 +16,7 @@ class Application extends Emitter {
             this,
             {server: server},
             JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
-        this.init();
+        // this.init();
     }
 
     init() {
@@ -28,17 +30,21 @@ class Application extends Emitter {
     }
 
     run() {
-        const server = this.server || http.createServer(this.callback());
-        return server.listen(this.port || 4600);
+        const server = http.createServer(this.handleServer);
+        return server.listen(this.port || 4600, this.afterCreate());
     }
 
-    callback() {
-        return (req, res) => {
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Hello Conso\n');
-        };
+    handleServer(req, res) {
+        req = new Request(req);
+        res = new Request(res);
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end("1231");
+    }
+
+    afterCreate() {
+        console.log(`listen on port:${this.port}`);
     }
 }
 
 
-module.exports = {Router, Scanner, Application};
+module.exports = {Router, Application};

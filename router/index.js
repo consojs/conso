@@ -3,8 +3,8 @@ let router = new Router();
 
 @router.request('/home')
 class Index {
-    constructor(str) {
-        console.log(str)
+    constructor() {
+        console.log(123);
     }
 
     @router.get('/article')

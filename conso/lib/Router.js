@@ -1,4 +1,4 @@
-let State = require('./state');
+let State = require('./State');
 
 module.exports = class Router {
     constructor() {

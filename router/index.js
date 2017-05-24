@@ -1,12 +1,14 @@
 let {Router} = require('../conso');
 let router = new Router();
 
-module.exports = class Index {
-    constructor() {
+@router.request('/home')
+class Index {
+    constructor(str) {
+        console.log(str)
     }
 
-    @router.get('/home')
-    init(req, res, next) {
-        console.log('init...');
+    @router.get('/article')
+    getArticle(req, res, next) {
+        return 333;
     }
-};
+}

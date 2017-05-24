@@ -10,6 +10,6 @@
     },
     "annotations": {
         "enable":false,
-        "basePackage":"./route"
+        "basePackage":"./router"
     }
 }

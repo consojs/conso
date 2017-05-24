@@ -2,6 +2,7 @@ let path = require('path');
 let fs = require('fs');
 let http = require('http');
 let Emitter = require('events');
+let State = require('./lib/state');
 let Router = require('./lib/Router');
 let Scanner = require('./lib/Scanner');
 let Util = require('./lib/Util');
@@ -18,11 +19,11 @@ class Application extends Emitter {
 
     init() {
         // const scanner = new Scanner(this.annotations.basePackage)
-        let dirList = fs.readdirSync('./router/');
+        let baseDir = path.join(process.cwd(), this.annotations.basePackage);
+        let dirList = fs.readdirSync(baseDir);
         dirList.map(file => {
-            console.log('file:', file);
-            let tmp = Util.autoLoad('./router');
-            console.log(tmp.toString());
+            let filePath = path.join(process.cwd(), this.annotations.basePackage, file);
+            Util.autoLoad(filePath);
         });
     }
 

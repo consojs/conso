@@ -2,34 +2,33 @@ let State = require('./State');
 
 module.exports = class Router {
     constructor() {
-        this.router = {};
+        this._route = {};
     }
 
-    request(url) {
+    route(url) {
         return (target, key, descriptor) => {
-            Object.assign(this.router, {url: url, target: target});
+            Object.assign(this._route, {url: url, target: target});
             this.setState();
         }
     }
 
     get(url) {
         return (target, key, descriptor) => {
-            this.router.get = this.router.get || [];
-            this.router.get.push({url: url, target: descriptor.value});
+            this._route.get = this._route.get || [];
+            this._route.get.push({url: url, target: descriptor.value});
         }
     }
 
     post(url) {
         return (target, key, descriptor) => {
-            this.router.post = this.router.post || [];
-            this.router.post.push({url: url, target: descriptor.value});
-            this.setState();
+            this._route.post = this._route.post || [];
+            this._route.post.push({url: url, target: descriptor.value});
         }
     }
 
     setState() {
-        let _index = State.router.findIndex(item => item.url === this.router.url);
-        _index === -1 ? State.router.push(this.router) : State.router[_index] = this.router;
+        let _index = State.route.findIndex(item => item.url === this._route.url);
+        _index === -1 ? State.route.push(this._route) : State.route[_index] = this._route;
     }
 
 };

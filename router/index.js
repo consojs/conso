@@ -1,14 +1,19 @@
 let {Router} = require('../conso');
 let router = new Router();
 
-@router.request('/home')
+@router.route('/home')
 class Index {
     constructor() {
-        console.log(123);
     }
 
     @router.get('/article')
     getArticle(req, res, next) {
-        return 333;
+        res.render('index', {title: 'conso'});
+    }
+
+    @router.post('/article')
+    test(req, res, next) {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end("xcv");
     }
 }

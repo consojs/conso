@@ -1,4 +1,4 @@
 let State = {
-    router: []
+    route: []
 };
 module.exports = State;

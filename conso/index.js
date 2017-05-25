@@ -57,6 +57,8 @@ class Application extends Emitter {
     handleRender(res) {
         res.render = (filename, data) => {
             this.engine = this.engine || require(this.view.name);
+            this.view.ext = this.view.charAt(0) === '.' ? this.view.ext : ('.' + this.view.ext);
+
             let template = fs.readFileSync(path.join(this.view.baseDir, filename + this.view.ext), "utf8");
             let result = this.engine.compile(template)(data);
             res.writeHead(200, {'Content-type': 'text/html'});

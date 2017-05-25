@@ -3,10 +3,12 @@
     "host": "localhost",
     "port": 4600,
     "publicDir": "./public",
+    "encoding": "utf8",
     "view": {
         "name": "handlebars",
-        "ext":".hbs",
-        "baseDir": "./view"
+        "ext": ".hbs",
+        "baseDir": "./view",
+        "cache": false
     },
     "dbConfig": {
         "host": "localhost",

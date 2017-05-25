@@ -6,14 +6,18 @@ class Index {
     constructor() {
     }
 
-    @router.get('/article')
-    getArticle(req, res, next) {
-        res.render('index', {title: 'conso'});
+    @router.get('/test1')
+    test1(req, res, next) {
+        res.render('index', {title: 'tyut'});
     }
 
-    @router.post('/article')
-    test(req, res, next) {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end("xcv");
+    @router.get('/tes2')
+    test2(req, res, next) {
+        res.json({data: 'this is a json'});
+    }
+
+    @router.post('/tes3')
+    test3(req, res, next) {
+        res.json({data: 'this is a json'});
     }
 }

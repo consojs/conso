@@ -3,21 +3,20 @@ let fs = require('fs');
 let http = require('http');
 let Emitter = require('events');
 let debug = require('debug')('conso:application');
-let bodyParser = require('body-parser');
 
 let State = require('./lib/State');
 let Router = require('./lib/Router');
 let Request = require('./lib/Request');
 let Response = require('./lib/Response');
+let Middleware = require('./lib/Middleware');
 let Util = require('./lib/Util');
 
+let middleware = new Middleware();
+
 class Application extends Emitter {
-    constructor(server) {
+    constructor() {
         super();
-        Object.assign(
-            this,
-            {server: server, middleware: []},
-            JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
+        Object.assign(this, JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
         this.init();
     }
 
@@ -29,11 +28,12 @@ class Application extends Emitter {
             let filePath = path.join(process.cwd(), this.annotations.basePackage, file);
             Util.autoLoad(filePath);
         });
+
     }
 
     use(fn) {
         if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
-        this.middleware.push(fn);
+        middleware.middleware = fn;
         return this;
     }
 
@@ -42,19 +42,20 @@ class Application extends Emitter {
         return server.listen(this.port || 4600, this.afterCreate());
     }
 
-    handleServer(req, res) {
-        this.middleware.map(fn => fn(req, res));
+    handleServer(req, res, next) {
+        // middleware
+        middleware.load(req, res, next);
+        // router
         this.handleRouter(new Request(req), new Request(this.handleRender(res)));
     }
 
-    handleRouter(req, res) {
+    handleRouter(req, res, next) {
         let handleClass = State.route.filter(item => new RegExp(`^${item.url}`).test(req.url))[0];
         if (handleClass) {
             const method = req.method.toLowerCase();
             let handleMethod = handleClass[method].filter(item => new RegExp(`^${item.url}`).test(req.url.replace(handleClass.url, '')))[0];
             if (handleMethod) {
                 let targetClass = new handleClass.target();
-                console.log(handleMethod);
                 handleMethod.target.apply(targetClass, arguments);
             }
         }

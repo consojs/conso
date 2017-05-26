@@ -8,7 +8,7 @@ class Index {
 
     @router.get('/test1')
     test1(req, res, next) {
-        console.log(123);
+        console.log(req.get);
         res.render('index', {title: 'tyut'});
     }
 
@@ -19,6 +19,8 @@ class Index {
 
     @router.post('/tes3')
     test3(req, res, next) {
-        res.json({data: 'this is a json'});
+        console.log(req.body);
+        res.render('index', {title: 'tyut'});
+        // res.json({data: 'this is a json'});
     }
 }

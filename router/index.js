@@ -8,6 +8,7 @@ class Index {
 
     @router.get('/test1')
     test1(req, res, next) {
+        console.log(123);
         res.render('index', {title: 'tyut'});
     }
 

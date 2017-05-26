@@ -16,7 +16,7 @@ class Application extends Emitter {
         super();
         Object.assign(
             this,
-            {server: server},
+            {server: server, middleware: []},
             JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
         this.init();
     }
@@ -30,20 +30,20 @@ class Application extends Emitter {
             Util.autoLoad(filePath);
         });
     }
-    use(){
-        this.middleware.map(middleware => middleware(req, res));
 
+    use(fn) {
         if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
         this.middleware.push(fn);
         return this;
     }
+
     run() {
         const server = http.createServer(this.handleServer.bind(this));
         return server.listen(this.port || 4600, this.afterCreate());
     }
 
     handleServer(req, res) {
-        this.handleMiddleware();
+        this.middleware.map(fn => fn(req, res));
         this.handleRouter(new Request(req), new Request(this.handleRender(res)));
     }
 
@@ -54,6 +54,7 @@ class Application extends Emitter {
             let handleMethod = handleClass[method].filter(item => new RegExp(`^${item.url}`).test(req.url.replace(handleClass.url, '')))[0];
             if (handleMethod) {
                 let targetClass = new handleClass.target();
+                console.log(handleMethod);
                 handleMethod.target.apply(targetClass, arguments);
             }
         }
@@ -61,11 +62,10 @@ class Application extends Emitter {
 
     handleRender(res) {
         res.render = (filename, data) => {
-            this.engine = this.engine || require(this.view.name);
-            this.view.ext = this.view.ext.charAt(0) === '.' ? this.view.ext : ('.' + this.view.ext);
-
-            let template = fs.readFileSync(path.join(this.view.baseDir, filename + this.view.ext), this.encoding | "utf8");
-            let result = this.engine.compile(template)(data);
+            let {view, engine = require(view.name)} = this;
+            view.ext = (view.ext.charAt(0) === '.' ? '' : '.') + view.ext;
+            let template = fs.readFileSync(path.join(view.baseDir, filename + view.ext), this.encoding || "utf8");
+            let result = engine.compile(template)(data);
             res.writeHead(200, {'Content-type': 'text/html'});
             res.end(result);
         };

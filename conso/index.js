@@ -3,6 +3,7 @@ let fs = require('fs');
 let http = require('http');
 let Emitter = require('events');
 let debug = require('debug')('conso:application');
+let bodyParser = require('body-parser');
 
 let State = require('./lib/State');
 let Router = require('./lib/Router');
@@ -29,20 +30,24 @@ class Application extends Emitter {
             Util.autoLoad(filePath);
         });
     }
+    use(){
+        this.middleware.map(middleware => middleware(req, res));
 
+        if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
+        this.middleware.push(fn);
+        return this;
+    }
     run() {
         const server = http.createServer(this.handleServer.bind(this));
         return server.listen(this.port || 4600, this.afterCreate());
     }
 
     handleServer(req, res) {
-        this.handleRouter(new Request(req), new Request(res));
-
+        this.handleMiddleware();
+        this.handleRouter(new Request(req), new Request(this.handleRender(res)));
     }
 
     handleRouter(req, res) {
-        arguments[0] = new Request(req);
-        arguments[1] = new Response(this.handleRender(res));
         let handleClass = State.route.filter(item => new RegExp(`^${item.url}`).test(req.url))[0];
         if (handleClass) {
             const method = req.method.toLowerCase();

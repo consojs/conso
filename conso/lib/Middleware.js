@@ -1,12 +1,10 @@
 let State = require('./State');
-let bodyParser = require('body-parser');
-let parseUrl = require('parseurl');
-let qs = require('qs');
+let url = require('url');
+let qs = require('querystring');
 module.exports = class Middleware {
     constructor() {
         this.middlewares = [
-            this.param4get,
-            bodyParser.urlencoded({extended: false})
+            this.getParam
         ];
     }
 
@@ -18,27 +16,31 @@ module.exports = class Middleware {
         this.middlewares.push(fn);
     }
 
-    load(req, res, next) {
-        this.middlewares.map(fn => fn(req, res, next));
+    borderParse(res, req) {
     }
 
-    param4get(req, res, next) {
-        if (!req.query) {
-            let val = parseUrl(req).query;
-            req.query = qs.parse(val);
-        }
-        if (!req.get) {
-            req.get = req.query;
-        }
-    };
+    load(req, res) {
+        this.middlewares.map(fn => fn(req, res));
+    }
 
-    // param4post(req, res) {
-    //     if (!req.query) {
-    //         let val = parseUrl(req).query;
-    //         req.query = qs.parse(val);
-    //     }
-    //     if (!req.get) {
-    //         req.get = req.query;
-    //     }
-    // };
+    // 处理url参数
+    getParam(req, res) {
+        req.query = req.query || qs.parse(url.parse(req.url).query);
+        req.get = req.get || req.query;
+
+        if (!req.body) {
+            let formData = '';
+            req.on('data', data => {
+                console.log(1)
+                formData += data;
+            });
+            req.on('end', () => {
+                console.log(2,qs.parse(formData))
+                req.body = qs.parse(formData);
+            })
+        }
+        console.log('req.body:');
+        console.log(req.body);
+
+    }
 };

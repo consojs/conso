@@ -42,11 +42,13 @@ class Application extends Emitter {
         return server.listen(this.port || 4600, this.afterCreate());
     }
 
-    handleServer(req, res, next) {
+    handleServer(req, res) {
+        req = new Request(req);
+        res = new Response(this.handleRender(res));
         // middleware
-        middleware.load(req, res, next);
+        middleware.load(req, res);
         // router
-        this.handleRouter(new Request(req), new Request(this.handleRender(res)));
+        this.handleRouter(req, res);
     }
 
     handleRouter(req, res, next) {

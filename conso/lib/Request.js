@@ -1,10 +1,10 @@
 let State = require('./State');
 module.exports = class Request {
-    constructor(req) {
-        return this.handle(req);
+    constructor(res) {
+        return this.handle(res);
     }
 
-    handle(req) {
-        return req;
+    handle(res) {
+        return res;
     }
 };

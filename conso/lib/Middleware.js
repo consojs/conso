@@ -48,7 +48,6 @@ module.exports = class Middleware {
                 let index = -1;
                 return dispatch(0);
                 function dispatch(i) {
-                    if (i <= index) return Promise.reject(new Error('next() called multiple times'));
                     index = i;
                     let fn = middleware[i];
                     if (i === middleware.length) fn = next;

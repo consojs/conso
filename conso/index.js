@@ -51,7 +51,7 @@ class Application extends Emitter {
         this.handleRouter(req, res);
     }
 
-    handleRouter(req, res, next) {
+    handleRouter(req, res) {
         let handleClass = State.route.filter(item => new RegExp(`^${item.url}`).test(req.url))[0];
         if (handleClass) {
             const method = req.method.toLowerCase();
@@ -59,8 +59,12 @@ class Application extends Emitter {
             if (handleMethod) {
                 let targetClass = new handleClass.target();
                 handleMethod.target.apply(targetClass, arguments);
+                return false;
             }
         }
+        res.writeHead(404, {'Content-Type': 'text/plain;charset=utf-8'});
+        res.end("{'code':404,'message':'404 页面不见啦'}");
+        return false;
     }
 
     handleRender(res) {

@@ -45,10 +45,9 @@ class Application extends Emitter {
     handleServer(req, res) {
         req = new Request(req);
         res = new Response(this.handleRender(res));
-        // middleware
-        middleware.load(req, res);
-        // router
-        this.handleRouter(req, res);
+
+        middleware.load(req, res, () => this.handleRouter(req, res));
+
     }
 
     handleRouter(req, res) {

@@ -19,8 +19,9 @@ class Index {
 
     @router.post('/tes3')
     test3(req, res, next) {
+        console.log('router:');
         console.log(req.body);
-        res.render('index', {title: 'tyut'});
+        res.render('index', {title: req.body.toString()});
         // res.json({data: 'this is a json'});
     }
 }

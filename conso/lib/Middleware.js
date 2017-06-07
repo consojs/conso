@@ -10,7 +10,7 @@ module.exports = class Middleware {
         this.req = req;
         this.res = res;
         this.middlewares = [
-            morgan('short'),
+            // morgan('short'),
             bodyParser.json,
             bodyParser.urlencoded({extended: false}),
             this.getParam
@@ -25,13 +25,17 @@ module.exports = class Middleware {
         this.middlewares.push(fn);
     }
 
-    next() {
-        let i = 0
-        if (i < this.middlewares.length) {
-            this.middlewares[i](this.req, this.res, next);
-        } else {
-            return;
+    load() {
+        let _this =this;
+        function next() {
+            let i = 0
+            if (i < _this.middlewares.length) {
+                _this.middlewares[i](_this.req, _this.res, next);
+            } else {
+                return;
+            }
         }
+        next()
     }
 
     // 处理url参数

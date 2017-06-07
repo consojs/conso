@@ -11,8 +11,6 @@ let Response = require('./lib/Response');
 let Middleware = require('./lib/Middleware');
 let Util = require('./lib/Util');
 
-let middleware = new Middleware();
-
 class Application extends Emitter {
     constructor() {
         super();
@@ -31,22 +29,23 @@ class Application extends Emitter {
 
     }
 
+    run() {
+        const server = http.createServer(this.handleServer.bind(this));
+        return server.listen(this.port || 4600, this.afterCreate());
+    }
+
     use(fn) {
         if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
         middleware.middleware = fn;
         return this;
     }
 
-    run() {
-        const server = http.createServer(this.handleServer.bind(this));
-        return server.listen(this.port || 4600, this.afterCreate());
-    }
-
     handleServer(req, res) {
         req = new Request(req);
         res = new Response(this.handleRender(res));
-
-        middleware.load(req, res, () => this.handleRouter(req, res));
+        let middleware = new Middleware(req,res);
+        middleware.middleware = this.handleRouter;
+        middleware.next();
 
     }
 

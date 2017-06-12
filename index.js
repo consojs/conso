@@ -11,6 +11,12 @@ let Response = require('./lib/Response');
 let Middleware = require('./lib/Middleware');
 let Util = require('./lib/Util');
 
+require("babel-register")({
+    "plugins": [
+        "transform-decorators-legacy"
+    ]
+});
+
 class Application extends Emitter {
     constructor() {
         super();

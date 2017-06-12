@@ -1,28 +1,26 @@
 {
-  "name": "conso",
-  "version": "0.0.2",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tageecc/conso.git"
-  },
-  "author": "tagee",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tageecc/conso/issues"
-  },
-  "homepage": "https://github.com/tageecc/conso#readme",
-  "devDependencies": {
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-latest": "^6.24.1"
-  },
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "debug": "^2.6.8",
-    "morgan": "^1.8.2"
-  }
+    "name": "conso",
+    "version": "0.0.6",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tageecc/conso.git"
+    },
+    "author": "tagee",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tageecc/conso/issues"
+    },
+    "homepage": "https://github.com/tageecc/conso#readme",
+    "dependencies": {
+        "babel-register": "^6.24.1",
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "body-parser": "^1.17.2",
+        "debug": "^2.6.8",
+        "morgan": "^1.8.2"
+    }
 }

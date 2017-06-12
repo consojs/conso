@@ -1,4 +1,5 @@
 let State = {
-    route: []
+    route: [],
+    middleware: [],
 };
 module.exports = State;

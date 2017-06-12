@@ -3,18 +3,28 @@ let url = require('url');
 let qs = require('querystring');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
-let Promise = require('any-promise');
+
+function next(err) {
+    if (err) {
+        return this.res.end('error:', err.toString());
+    }
+    if (this.index < this.middlewares.length) {
+        this.middlewares[this.index++](this.req, this.res, next.bind(this));
+    }
+}
 
 module.exports = class Middleware {
     constructor(req, res) {
         this.req = req;
         this.res = res;
+        this.index = 0;
         this.middlewares = [
-            // morgan('short'),
-            bodyParser.json,
+            morgan('short'),
+            bodyParser.json(),
             bodyParser.urlencoded({extended: false}),
             this.getParam
         ];
+        return this;
     }
 
     get middleware() {
@@ -26,16 +36,7 @@ module.exports = class Middleware {
     }
 
     load() {
-        let _this =this;
-        function next() {
-            let i = 0
-            if (i < _this.middlewares.length) {
-                _this.middlewares[i](_this.req, _this.res, next);
-            } else {
-                return;
-            }
-        }
-        next()
+        next.call(this);
     }
 
     // 处理url参数

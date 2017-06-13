@@ -49,7 +49,7 @@ class Application extends Emitter {
     handleServer(req, res) {
         req = new Request(req);
         res = new Response(this.handleRender(res));
-        let middleware = new Middleware(req,res);
+        let middleware = new Middleware(req, res);
         middleware.middleware = this.handleRouter;
         middleware.load();
 
@@ -59,6 +59,7 @@ class Application extends Emitter {
         let handleClass = State.route.filter(item => new RegExp(`^${item.url}`).test(req.url))[0];
         if (handleClass) {
             const method = req.method.toLowerCase();
+            req.url.replace(handleClass.url, '') === '' ? req.url += '/' : null;
             let handleMethod = handleClass[method].filter(item => new RegExp(`^${item.url}`).test(req.url.replace(handleClass.url, '')))[0];
             if (handleMethod) {
                 let targetClass = new handleClass.target();

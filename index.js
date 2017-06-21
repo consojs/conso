@@ -60,20 +60,31 @@ class Application extends Emitter {
     }
 
     handleRouter(req, res) {
-        let handleClass = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
+        let handleRoute = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
         console.log(req.url);
-        console.log(handleClass);
-        if (handleClass) {
+        console.log(handleRoute);
+        if (handleRoute) {
             const method = req.method.toLowerCase();
-            let i_star = 0, i_end = req.url;
-            let handleMethod = handleClass[method].filter(item => {
-                return new RegExp(`^${item.url}`).test(req.url)[0]
-            });
+            let handleClass = new handleRoute.route.target();
+            let position = handleRoute.route.path.length;
+            let handleMethod = handleRoute[method].filter(item => new RegExp(`^${item.path}`).test(req.url.substr(position)))[0];
+            // handleRoute.resource.map(item => handleClass[item.key] = item.value)
+            console.log('handleClass.toString()')
+            console.log(handleClass.toString())
+            console.dir(handleClass)
+            console.log(handleClass.user)
+            handleRoute.resource.map(item => {
+                Object.defineProperty(handleClass, item.key, {
+                    Writable: true,//设置为false，name属性为只读的
+                    value: item.value,
+                    Configurable: false //设置为false，则name属性不能通过delete删除
+                })
+            })
             if (handleMethod) {
-                let targetClass = new handleClass.target();
-                handleMethod.target.apply(targetClass, arguments);
+                handleMethod.value.apply(handleClass, arguments);
                 return false;
             }
+
         }
         res.writeHead(404, {'Content-Type': 'text/plain;charset=utf-8'});
         res.end("{'code':404,'message':'404 页面不见啦'}");

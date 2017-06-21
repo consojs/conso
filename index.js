@@ -7,13 +7,15 @@ let debug = require('debug')('conso:application');
 let State = require('./lib/State');
 let Router = require('./lib/Router');
 let Request = require('./lib/Request');
+let Annotation = require('./lib/Annotation');
 let Response = require('./lib/Response');
 let Middleware = require('./lib/Middleware');
 let Util = require('./lib/Util');
 
 require("babel-register")({
     "plugins": [
-        "transform-decorators-legacy"
+        "transform-decorators-legacy",
+        "transform-class-properties"
     ]
 });
 
@@ -24,7 +26,9 @@ class Application extends Emitter {
         this.init();
     }
 
+
     init() {
+        // 扫描包，自动引用
         // const scanner = new Scanner(this.annotations.basePackage)
         let baseDir = path.join(process.cwd(), this.annotations.basePackage);
         let dirList = fs.readdirSync(baseDir);
@@ -90,4 +94,4 @@ class Application extends Emitter {
 }
 
 
-module.exports = {Router, Application};
+module.exports = {Router, Annotation, Application};

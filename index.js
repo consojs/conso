@@ -7,9 +7,10 @@ let debug = require('debug')('conso:application');
 let State = require('./lib/State');
 let Router = require('./lib/Router');
 let Request = require('./lib/Request');
-let Annotation = require('./lib/Annotation');
 let Response = require('./lib/Response');
+let Annotation = require('./lib/Annotation');
 let Middleware = require('./lib/Middleware');
+let Database = require('./lib/Database');
 let Util = require('./lib/Util');
 
 require("babel-register")({
@@ -22,7 +23,9 @@ require("babel-register")({
 class Application extends Emitter {
     constructor() {
         super();
-        Object.assign(this, JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
+        const config_file_path = path.join(process.cwd(), 'config.js');
+        if (!fs.existsSync(config_file_path)) throw new Error('config.js is not found');
+        Object.assign(this, require(config_file_path));
         this.init();
     }
 
@@ -51,6 +54,10 @@ class Application extends Emitter {
     }
 
     handleServer(req, res) {
+        let context = {};
+        context.app = request.app = response.app = this;
+        context.req = req;
+        context.res = res;
         req = new Request(req);
         res = new Response(this.handleRender(res));
         let middleware = new Middleware(req, res);
@@ -60,31 +67,20 @@ class Application extends Emitter {
     }
 
     handleRouter(req, res) {
-        let handleRoute = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
-        console.log(req.url);
-        console.log(handleRoute);
-        if (handleRoute) {
+        let handleRouter = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
+        if (handleRouter) {
             const method = req.method.toLowerCase();
-            let handleClass = new handleRoute.route.target();
-            let position = handleRoute.route.path.length;
-            let handleMethod = handleRoute[method].filter(item => new RegExp(`^${item.path}`).test(req.url.substr(position)))[0];
-            // handleRoute.resource.map(item => handleClass[item.key] = item.value)
-            console.log('handleClass.toString()')
-            console.log(handleClass.toString())
-            console.dir(handleClass)
-            console.log(handleClass.user)
-            handleRoute.resource.map(item => {
-                Object.defineProperty(handleClass, item.key, {
-                    Writable: true,//设置为false，name属性为只读的
-                    value: item.value,
-                    Configurable: false //设置为false，则name属性不能通过delete删除
-                })
-            })
+            let router = handleRouter.route;
+            let index = router.path.length;
+            let handleClass = router.value;
+            let handleMethod = handleRouter[method].filter(item => new RegExp(`^${item.path}`).test(req.url.substr(index)))[0];
+            handleRouter.resource.map(item => {
+                handleClass[item.key] = item.value;
+            });
             if (handleMethod) {
-                handleMethod.value.apply(handleClass, arguments);
+                handleMethod.value.call(handleClass, req, res);
                 return false;
             }
-
         }
         res.writeHead(404, {'Content-Type': 'text/plain;charset=utf-8'});
         res.end("{'code':404,'message':'404 页面不见啦'}");

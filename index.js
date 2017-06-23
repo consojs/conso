@@ -8,6 +8,7 @@ let State = require('./lib/State');
 let Router = require('./lib/Router');
 let Request = require('./lib/Request');
 let Response = require('./lib/Response');
+let Context = require('./lib/Context');
 let Annotation = require('./lib/Annotation');
 let Middleware = require('./lib/Middleware');
 let Database = require('./lib/Database');
@@ -26,6 +27,9 @@ class Application extends Emitter {
         const config_file_path = path.join(process.cwd(), 'config.js');
         if (!fs.existsSync(config_file_path)) throw new Error('config.js is not found');
         Object.assign(this, require(config_file_path));
+        this.context = Object.create(Context);
+        this.request = Object.create(Request);
+        this.response = Object.create(Response);
         this.init();
     }
 
@@ -53,14 +57,34 @@ class Application extends Emitter {
         return this;
     }
 
-    handleServer(req, res) {
-        let context = {};
+    /**
+     * Initialize a new context.
+     */
+    createContext(req, res) {
+        const context = Object.create(this.context);
+        const request = context.request = Object.create(this.request);
+        const response = context.response = Object.create(this.response);
         context.app = request.app = response.app = this;
-        context.req = req;
-        context.res = res;
-        req = new Request(req);
-        res = new Response(this.handleRender(res));
-        let middleware = new Middleware(req, res);
+        context.req = request.req = response.req = req;
+        context.res = request.res = response.res = res;
+        request.ctx = response.ctx = context;
+        request.response = response;
+        response.request = request;
+        context.originalUrl = request.originalUrl = req.url;
+        context.cookies = new Cookies(req, res, {
+            keys: this.keys,
+            secure: request.secure
+        });
+        request.ip = request.ips[0] || req.socket.remoteAddress || '';
+        context.accept = request.accept = accepts(req);
+        context.state = {};
+        return context;
+    }
+
+    handleServer(req, res) {
+        const ctx = this.createContext(req, res);
+        // this.handleRender(res)
+        let middleware = new Middleware(ctx);
         middleware.middleware = this.handleRouter;
         middleware.load();
 

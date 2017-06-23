@@ -7,9 +7,10 @@ let debug = require('debug')('conso:application');
 let State = require('./lib/State');
 let Router = require('./lib/Router');
 let Request = require('./lib/Request');
-let Annotation = require('./lib/Annotation');
 let Response = require('./lib/Response');
+let Annotation = require('./lib/Annotation');
 let Middleware = require('./lib/Middleware');
+let Database = require('./lib/Database');
 let Util = require('./lib/Util');
 
 require("babel-register")({
@@ -53,6 +54,10 @@ class Application extends Emitter {
     }
 
     handleServer(req, res) {
+        let context = {};
+        context.app = request.app = response.app = this;
+        context.req = req;
+        context.res = res;
         req = new Request(req);
         res = new Response(this.handleRender(res));
         let middleware = new Middleware(req, res);

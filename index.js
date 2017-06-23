@@ -60,18 +60,18 @@ class Application extends Emitter {
     }
 
     handleRouter(req, res) {
-        let handleClass = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
-        console.log(req.url);
-        console.log(handleClass);
-        if (handleClass) {
+        let handleRouter = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(req.url))[0];
+        if (handleRouter) {
             const method = req.method.toLowerCase();
-            let i_star = 0, i_end = req.url;
-            let handleMethod = handleClass[method].filter(item => {
-                return new RegExp(`^${item.url}`).test(req.url)[0]
+            let router = handleRouter.route;
+            let index = router.path.length;
+            let handleClass = router.value;
+            let handleMethod = handleRouter[method].filter(item => new RegExp(`^${item.path}`).test(req.url.substr(index)))[0];
+            handleRouter.resource.map(item => {
+                handleClass[item.key] = item.value;
             });
             if (handleMethod) {
-                let targetClass = new handleClass.target();
-                handleMethod.target.apply(targetClass, arguments);
+                handleMethod.value.call(handleClass, req, res);
                 return false;
             }
         }

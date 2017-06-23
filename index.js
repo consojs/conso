@@ -22,7 +22,9 @@ require("babel-register")({
 class Application extends Emitter {
     constructor() {
         super();
-        Object.assign(this, JSON.parse(fs.readFileSync(path.join(process.cwd(), 'config.json'))));
+        const config_file_path = path.join(process.cwd(), 'config.js');
+        if (!fs.existsSync(config_file_path)) throw new Error('config.js is not found');
+        Object.assign(this, require(config_file_path));
         this.init();
     }
 

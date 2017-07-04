@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "_args": [
     [
       {
@@ -53,14 +54,46 @@
   },
   "dependencies": {
     "accepts": "^1.2.2",
+=======
+  "name": "conso",
+  "version": "0.0.6",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tageecc/conso.git"
+  },
+  "author": "tagee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tageecc/conso/issues"
+  },
+  "homepage": "https://github.com/tageecc/conso#readme",
+  "dependencies": {
+>>>>>>> a7c5de60be46194ab901db6de9332592d53b6233
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-register": "^6.24.1",
     "body-parser": "^1.17.2",
+<<<<<<< HEAD
     "content-disposition": "~0.5.0",
     "content-type": "^1.0.0",
     "cookies": "~0.6.1",
     "debug": "^2.6.8",
+=======
+    "debug": "^2.6.8",
+    "js-data": "^2.10.0",
+    "js-data-mongodb": "^0.7.0",
+    "js-data-sql": "^0.11.17",
+    "morgan": "^1.8.2",
+    "accepts": "^1.2.2",
+    "content-disposition": "~0.5.0",
+    "content-type": "^1.0.0",
+    "cookies": "~0.6.1",
+>>>>>>> a7c5de60be46194ab901db6de9332592d53b6233
     "delegates": "^1.0.0",
     "depd": "^1.1.0",
     "destroy": "^1.0.3",
@@ -70,20 +103,27 @@
     "http-assert": "^1.1.0",
     "http-errors": "^1.2.8",
     "is-generator-function": "^1.0.3",
+<<<<<<< HEAD
     "js-data": "^2.10.0",
     "js-data-mongodb": "^0.7.0",
     "js-data-sql": "^0.11.17",
+=======
+>>>>>>> a7c5de60be46194ab901db6de9332592d53b6233
     "koa-compose": "^3.0.0",
     "koa-convert": "^1.2.0",
     "koa-is-json": "^1.0.0",
     "mime-types": "^2.0.7",
+<<<<<<< HEAD
     "morgan": "^1.8.2",
+=======
+>>>>>>> a7c5de60be46194ab901db6de9332592d53b6233
     "on-finished": "^2.1.0",
     "only": "0.0.2",
     "parseurl": "^1.3.0",
     "statuses": "^1.2.0",
     "type-is": "^1.5.5",
     "vary": "^1.0.0"
+<<<<<<< HEAD
   },
   "description": "",
   "devDependencies": {},
@@ -112,4 +152,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "0.0.8"
+=======
+  }
+>>>>>>> a7c5de60be46194ab901db6de9332592d53b6233
 }

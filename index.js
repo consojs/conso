@@ -11,7 +11,6 @@ let Router = require('./lib/Router');
 let Context = require('./lib/Context');
 let Annotation = require('./lib/Annotation');
 let Middleware = require('./lib/Middleware');
-let Database = require('./lib/Database');
 let Util = require('./lib/Util');
 
 require("babel-register")({

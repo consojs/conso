@@ -6,13 +6,12 @@ let accepts = require('accepts');
 
 let debug = require('debug')('conso:application');
 
-let State = require('./lib/State');
-let Router = require('./lib/Router');
+let State = require('./lib/Store');
+let Util = require('./lib/Util');
 let Context = require('./lib/Context');
+let Database = require('./lib/Database');
 let Annotation = require('./lib/Annotation');
 let Middleware = require('./lib/Middleware');
-let Util = require('./lib/Util');
-
 require("babel-register")({
     "plugins": [
         "transform-decorators-legacy",
@@ -23,12 +22,8 @@ require("babel-register")({
 class Application extends Emitter {
     constructor() {
         super();
-        const config_file_path = path.join(process.cwd(), 'config.js');
-        if (!fs.existsSync(config_file_path)) throw new Error('config.js is not found');
-        this.proxy = false;
-        this.subdomainOffset = 2;
-        this.env = process.env.NODE_ENV || 'development';
-        Object.assign(this, require(config_file_path));
+        Object.assign(this, State.config());
+
         this.init();
     }
 
@@ -85,4 +80,4 @@ class Application extends Emitter {
 }
 
 
-module.exports = {Router, Annotation, Application};
+module.exports = {Annotation, Application, Database};

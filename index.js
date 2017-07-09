@@ -9,8 +9,8 @@ let debug = require('debug')('conso:application');
 let State = require('./lib/Store');
 let Util = require('./lib/Util');
 let Context = require('./lib/Context');
-let Database = require('./lib/Database');
 let Annotation = require('./lib/Annotation');
+let Database = require('./lib/Database');
 let Middleware = require('./lib/Middleware');
 require("babel-register")({
     "plugins": [
@@ -23,10 +23,8 @@ class Application extends Emitter {
     constructor() {
         super();
         Object.assign(this, State.config());
-
         this.init();
     }
-
 
     init() {
         // 扫描包，自动引用
@@ -37,23 +35,22 @@ class Application extends Emitter {
             let filePath = path.join(process.cwd(), this.annotations.basePackage, file);
             Util.autoLoad(filePath);
         });
-
     }
 
     run() {
         const server = http.createServer(this.handleServer.bind(this));
-        return server.listen(this.port || 4600, this.afterCreate());
+        return server.listen(this.port || 3000, this.afterCreate());
     }
 
     handleServer(req, res) {
         let ctx = new Context(this, req, res);
         let middleware = new Middleware(ctx);
-        middleware.middleware = this.handleRouter;
+        middleware.middleware = this.handleRouter.bind(this);
         middleware.load();
 
     }
 
-    handleRouter(ctx, next) {
+    async handleRouter(ctx, next) {
         let handleRouter = State.annotation.filter(item => new RegExp(`^${item.route.path}`).test(ctx.url))[0];
         if (handleRouter) {
             const method = ctx.method.toLowerCase();
@@ -61,9 +58,12 @@ class Application extends Emitter {
             let index = router.path.length;
             let handleClass = router.value;
             let handleMethod = handleRouter[method].filter(item => new RegExp(`^${item.path}`).test(ctx.url.substr(index)))[0];
-            handleRouter.resource.map(item => {
-                handleClass[item.key] = item.value;
+
+            this.database = this.database || await Database();
+            handleRouter.model.map(item => {
+                handleClass[item.key] = this.database.collections[item.key];
             });
+
             if (handleMethod) {
                 handleMethod.value.call(handleClass, ctx, next);
                 return false;
@@ -80,4 +80,4 @@ class Application extends Emitter {
 }
 
 
-module.exports = {Annotation, Application, Database};
+module.exports = {Annotation, Application};

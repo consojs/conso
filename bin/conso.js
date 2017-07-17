@@ -160,7 +160,7 @@ class Generator {
                 "sails-mongo": "^0.12.2"
             }
         };
-        fse.outputJsonSync(resolve(this.project_path, 'package.json'), JSON.stringify(pkg, null, 2));
+        fse.outputFileSync(resolve(this.project_path, 'package.json'), JSON.stringify(pkg, null, 2));
         console.log(chalk.green(`   √ create : ${resolve(this.project_path, 'package.json')}`));
 
         // webConfig.json

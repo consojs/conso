@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Conso' application generator
 const {resolve} = require('path');
 const fse = require('fs-extra');

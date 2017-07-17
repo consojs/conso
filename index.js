@@ -48,6 +48,5 @@ class Application extends Emitter {
 
 module.exports = {
     Annotation,
-    Application,
-    Conso: require('./lib/Generator')
+    Application
 };

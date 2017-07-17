@@ -132,7 +132,7 @@ class Generator {
         });
 
         //.gitignore
-        fse.copySync(resolve(this.templateDir, '.gitignore'), resolve(this.project_path, '.gitignore'), {
+        fse.copySync(resolve(this.templateDir, 'gitignore'), resolve(this.project_path, '.gitignore'), {
             filter: (src, dest) => {
                 console.log(chalk.green(`   √ create : ${dest}`));
                 return true;

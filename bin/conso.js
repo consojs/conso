@@ -48,6 +48,18 @@ class Generator {
             process.env._ === undefined
     }
 
+    parseEngineExt(engine) {
+        if ('handlebars' === engine)return '.hbs';
+        if ('ejs' === engine)return '.ejs';
+        if ('hogan' === engine)return '.hjs';
+        if ('jade' === engine)return '.jade';
+        if ('pug' === engine)return '.pug';
+        if ('twig' === engine)return '.twig';
+        if ('vash' === engine)return '.vash';
+        if ('art' === engine)return '.art';
+        return '.js'
+    }
+
     async createApplication(projectName) {
         this.projectName = projectName;
         this.project_path = resolve(projectName);
@@ -135,7 +147,7 @@ class Generator {
             encoding: "utf8",
             view: {
                 engine: params.engine,
-                ext: "." + params.engine,
+                ext: this.parseEngineExt(params.engine),
                 dir: params.view,
                 cache: false,
                 option: {}

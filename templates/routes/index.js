@@ -1,13 +1,9 @@
 let {Annotation} = require('conso');
-let User = require('../module/User');
 
-let {route, get, post, model} = Annotation;
+let {route, get} = Annotation;
 
 @route('/')
 class index {
-
-    @model(User)
-    user;
 
     @get('/')
     index(ctx, next) {

@@ -17,8 +17,6 @@ class Generator {
             .option('-v, --view <view>', 'set view dir', './view')
             .option('-e, --engine <engine>', 'set view engine', 'handlebars')
             .option('-p, --public <engine>', 'set public dir', './public')
-            .option('-d, --database <database>', 'set database engine', 'mongodb')
-            .option('-dn, --dbname <dbname>', 'set database name', 'db_conso')
             .option('-r, --routes <routes>', 'set routes dir', './routes')
             .option('-c, --config <file>', 'set config file', 'webConfig.json')
             .option('-f --force', 'set config file');
@@ -43,32 +41,6 @@ class Generator {
                 resolve(val.trim());
             }).resume();
         })
-    }
-
-    getDefaultDatabasePort(db) {
-        db = db.toLowerCase();
-        if ('mongodb' === db) {
-            return 27017;
-        }
-        if ('mysql' === db || 'mariadb' === db) {
-            return 3306;
-        }
-        if ('oracle' === db) {
-            return 1521;
-        }
-        if ('sqlserver' === db) {
-            return 1433;
-        }
-        if ('postgresql' === db) {
-            return 5432;
-        }
-        if ('db2' === db) {
-            return 5000;
-        }
-        if ('redis' === db) {
-            return 6379;
-        }
-        return 0;
     }
 
     launchedFromCmd() {
@@ -114,14 +86,6 @@ class Generator {
             }
         });
 
-        // module
-        fse.copySync(resolve(this.templateDir, './module'), resolve(this.project_path, './module'), {
-            filter: (src, dest) => {
-                console.log(chalk.green(`   √ create : ${dest}`));
-                return true;
-            }
-        });
-
         // public
         fse.copySync(resolve(this.templateDir, './public'), resolve(this.project_path, './public'), {
             filter: (src, dest) => {
@@ -156,8 +120,7 @@ class Generator {
             },
             dependencies: {
                 "conso": require('../package.json').version,
-                "handlebars": "^4.0.10",
-                "sails-mongo": "^0.12.2"
+                "handlebars": "^4.0.10"
             }
         };
         fse.outputFileSync(resolve(this.project_path, 'package.json'), JSON.stringify(pkg, null, 2));
@@ -176,16 +139,6 @@ class Generator {
                 dir: params.view,
                 cache: false,
                 option: {}
-            },
-            DBConfig: {
-                client: params.database,
-                config: {
-                    host: '127.0.0.1',
-                    port: this.getDefaultDatabasePort(params.database),
-                    // user: 'user',
-                    // password: 'password',
-                    database: params.dbname,
-                }
             },
             annotations: {
                 enable: true,

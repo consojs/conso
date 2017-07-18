@@ -19,7 +19,9 @@ class Generator {
             .option('-p, --public <engine>', 'set public dir', './public')
             .option('-r, --routes <routes>', 'set routes dir', './routes')
             .option('-c, --config <file>', 'set config file', 'webConfig.json')
-            .option('-f --force', 'set config file');
+            .option('-f --force', 'set config file')
+            .option('--git', 'add .gitignore');
+
 
         this.program
             .command('init <projectName>')
@@ -108,12 +110,15 @@ class Generator {
         });
 
         //.gitignore
-        fse.copySync(resolve(this.templateDir, 'gitignore'), resolve(this.project_path, '.gitignore'), {
-            filter: (src, dest) => {
-                console.log(chalk.green(`   √ create : ${dest}`));
-                return true;
-            }
-        });
+        if(params.git){
+            fse.copySync(resolve(this.templateDir, 'gitignore'), resolve(this.project_path, '.gitignore'), {
+                filter: (src, dest) => {
+                    console.log(chalk.green(`   √ create : ${dest}`));
+                    return true;
+                }
+            });
+        }
+
         //app.js
         fse.copySync(resolve(this.templateDir, 'app.js'), resolve(this.project_path, 'app.js'), {
             filter: (src, dest) => {

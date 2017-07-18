@@ -33,10 +33,10 @@ class Application extends Emitter {
     handleServer(req, res) {
         let ctx = new Context(this, req, res);
         let middleware = new Middleware(ctx);
-        // handle static resource
-        middleware.middleware = serveStatic(this.public);
         // handle route
         middleware.middleware = this.scanner.handleRouter.bind(this);
+        // handle static resource
+        middleware.middleware = serveStatic(this.public);
         middleware.load();
     }
 

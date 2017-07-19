@@ -17,9 +17,9 @@ require("babel-register")({
 });
 
 class Application extends Emitter {
-    constructor(option) {
+    constructor(option={}) {
         super();
-        Object.assign(this, Store.config(option.configFile));
+        Object.assign(this, Store.config(option.config));
         this._middleware = [];
         // auto require routes
         this.scanner = new Scanner(this);

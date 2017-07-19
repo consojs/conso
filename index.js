@@ -17,11 +17,11 @@ require("babel-register")({
 });
 
 class Application extends Emitter {
-    constructor() {
+    constructor(option) {
         super();
-        Object.assign(this, Store.config());
-
-        // autorequire controller
+        Object.assign(this, Store.config(option.configFile));
+        this._middleware = [];
+        // auto require routes
         this.scanner = new Scanner(this);
     }
 
@@ -30,9 +30,17 @@ class Application extends Emitter {
         return server.listen(this.port || 3000, this.afterCreate());
     }
 
+    use(fn) {
+        if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
+        this._middleware.push(fn);
+        return this;
+    }
+
     handleServer(req, res) {
         let ctx = new Context(this, req, res);
         let middleware = new Middleware(ctx);
+        // handle use
+        this._middleware.map(mdw => middleware.middleware = mdw);
         // handle route
         middleware.middleware = this.scanner.handleRouter.bind(this);
         // handle static resource

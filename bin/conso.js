@@ -110,7 +110,7 @@ class Generator {
         });
 
         //.gitignore
-        if(params.git){
+        if (params.git) {
             fse.copySync(resolve(this.templateDir, 'gitignore'), resolve(this.project_path, '.gitignore'), {
                 filter: (src, dest) => {
                     console.log(chalk.green(`   √ create : ${dest}`));
@@ -120,12 +120,12 @@ class Generator {
         }
 
         //app.js
-        fse.copySync(resolve(this.templateDir, 'app.js'), resolve(this.project_path, 'app.js'), {
-            filter: (src, dest) => {
-                console.log(chalk.green(`   √ create : ${dest}`));
-                return true;
-            }
-        });
+        let app_str = `let {Application} = require('conso');\nnew Application(${params.config ? '{config: "' + params.config + '"}' : ''}).run();`;
+        if('webConfig.json'===params.config){
+            app_str= `let {Application} = require('conso');\nnew Application().run();`;
+        }
+        fse.outputFileSync(resolve(this.project_path, 'app.js'), app_str);
+        console.log(chalk.green(`   √ create : ${resolve(this.project_path, 'app.js')}`));
 
         // package.json
         let pkg = {
@@ -143,7 +143,7 @@ class Generator {
         fse.outputFileSync(resolve(this.project_path, 'package.json'), JSON.stringify(pkg, null, 2));
         console.log(chalk.green(`   √ create : ${resolve(this.project_path, 'package.json')}`));
 
-        // webConfig.json
+        // webConfig2.json
         let webConfig = {
             project: this.projectName,
             host: "localhost",

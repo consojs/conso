@@ -1,6 +1,6 @@
 {
     "name": "conso",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "",
     "main": "index.js",
     "bin": {
@@ -28,14 +28,12 @@
         "commander": "^2.11.0",
         "content-disposition": "^0.5.2",
         "content-type": "^1.0.2",
-        "debug": "^2.6.8",
         "delegates": "^1.0.0",
         "destroy": "^1.0.4",
         "error-inject": "^1.0.0",
         "escape-html": "^1.0.3",
         "fresh": "^0.5.0",
         "fs-extra": "^4.0.0",
-        "handlebars": "^4.0.10",
         "koa-bodyparser": "^4.2.0",
         "koa-compose": "^4.0.0",
         "koa-is-json": "^1.0.0",

@@ -15,12 +15,12 @@ class Generator {
             .version(require('../package.json').version)
             .usage('init [option]')
             .option('-v, --view <view>', 'set view dir', './view')
-            .option('-e, --engine <engine>', 'set view engine', 'handlebars')
+            .option('-e, --engine <engine>', 'set view engine', 'hbs')
             .option('-p, --public <engine>', 'set public dir', './public')
             .option('-r, --routes <routes>', 'set routes dir', './routes')
             .option('-c, --config <file>', 'set config file', 'webConfig.json')
-            .option('-f --force', 'set config file')
-            .option('--git', 'add .gitignore');
+            .option('-f, --force', 'set config file')
+            .option('    --git', 'add .gitignore');
 
 
         this.program
@@ -48,18 +48,6 @@ class Generator {
     launchedFromCmd() {
         return process.platform === 'win32' &&
             process.env._ === undefined
-    }
-
-    parseEngineExt(engine) {
-        if ('handlebars' === engine)return '.hbs';
-        if ('ejs' === engine)return '.ejs';
-        if ('hogan' === engine)return '.hjs';
-        if ('jade' === engine)return '.jade';
-        if ('pug' === engine)return '.pug';
-        if ('twig' === engine)return '.twig';
-        if ('vash' === engine)return '.vash';
-        if ('art' === engine)return '.art';
-        return '.js'
     }
 
     async createApplication(projectName) {
@@ -121,8 +109,8 @@ class Generator {
 
         //app.js
         let app_str = `let {Application} = require('conso');\nnew Application(${params.config ? '{config: "' + params.config + '"}' : ''}).run();`;
-        if('webConfig.json'===params.config){
-            app_str= `let {Application} = require('conso');\nnew Application().run();`;
+        if ('webConfig.json' === params.config) {
+            app_str = `let {Application} = require('conso');\nnew Application().run();`;
         }
         fse.outputFileSync(resolve(this.project_path, 'app.js'), app_str);
         console.log(chalk.green(`   √ create : ${resolve(this.project_path, 'app.js')}`));
@@ -137,9 +125,34 @@ class Generator {
             },
             dependencies: {
                 "conso": require('../package.json').version,
-                "handlebars": "^4.0.10"
             }
         };
+        switch (params.engine) {
+            case 'dust':
+                pkg.dependencies['adaro'] = '^1.0.4';
+                break;
+            case 'jade':
+                pkg.dependencies['jade'] = '^1.11.0';
+                break;
+            case 'ejs':
+                pkg.dependencies['ejs'] = '^2.5.6';
+                break;
+            case 'hjs':
+                pkg.dependencies['hjs'] = '^0.0.6';
+                break;
+            case 'hbs':
+                pkg.dependencies['hbs'] = '^4.0.1';
+                break;
+            case 'pug':
+                pkg.dependencies['pug'] = '^2.0.0-rc.2';
+                break;
+            case 'twig':
+                pkg.dependencies['twig'] = '^1.10.5';
+                break;
+            case 'vash':
+                pkg.dependencies['vash'] = '^0.12.2';
+                break
+        }
         fse.outputFileSync(resolve(this.project_path, 'package.json'), JSON.stringify(pkg, null, 2));
         console.log(chalk.green(`   √ create : ${resolve(this.project_path, 'package.json')}`));
 
@@ -152,8 +165,9 @@ class Generator {
             encoding: "utf8",
             view: {
                 engine: params.engine,
-                ext: this.parseEngineExt(params.engine),
+                ext: params.engine,
                 dir: params.view,
+                layout: "layout",
                 cache: false,
                 option: {}
             },

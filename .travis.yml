@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+node_js:
+  - '6'
+  - '7'
+  - '8'
+install:
+  - npm i npminstall && npminstall
+script:
+  - npm run ci
+after_script:
+  - npminstall codecov && codecov
+  - travis_wait scripts/doc_travis.sh
+env:
+  global:
+  - ENCRYPTION_LABEL: a62186272189

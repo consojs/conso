@@ -16,7 +16,7 @@ Born to build better enterprise frameworks and apps
 [quality-image]: http://npm.packagequality.com/shield/conso.svg
 [quality-url]: http://packagequality.com/#?package=conso
 [travis-image]: https://img.shields.io/travis/tageecc/conso.svg?style=flat-square
-[travis-url]: https://travis-ci.org/tageeccc/conso
+[travis-url]: https://travis-ci.org/tageecc/conso
 [codecov-image]: https://img.shields.io/codecov/c/github/tageecc/conso.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/tageecc/conso
 [david-image]: https://img.shields.io/david/tageecc/conso.svg?style=flat-square

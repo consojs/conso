@@ -29,6 +29,7 @@ $ npm install conso -g
 ```
 ## Features
 
+- ✔︎ Annotation
 - ✔︎ Dependency Injection
 - ✔︎ Configurable
 - ✔︎ Async/Await

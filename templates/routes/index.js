@@ -6,7 +6,7 @@ let {route, get} = Annotation;
 class index {
 
     @get('/')
-    index(ctx, next) {
-        ctx.render('index', {title: 'Conso'});
+    async homePage(ctx, next) {
+        await ctx.render('index', {title: 'Conso'});
     }
 }

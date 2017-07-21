@@ -125,6 +125,30 @@ class Generator {
             },
             dependencies: {
                 "conso": require('../package.json').version,
+                "accepts": "^1.3.3",
+                "babel-plugin-transform-class-properties": "^6.24.1",
+                "babel-plugin-transform-decorators-legacy": "^1.3.4",
+                "babel-register": "^6.24.1",
+                "content-disposition": "^0.5.2",
+                "content-type": "^1.0.2",
+                "delegates": "^1.0.0",
+                "destroy": "^1.0.4",
+                "error-inject": "^1.0.0",
+                "escape-html": "^1.0.3",
+                "fresh": "^0.5.0",
+                "koa-bodyparser": "^4.2.0",
+                "koa-compose": "^4.0.0",
+                "koa-is-json": "^1.0.0",
+                "koa-morgan": "^1.0.1",
+                "koa-static": "^4.0.1",
+                "morgan": "^1.8.2",
+                "on-finished": "^2.3.0",
+                "only": "0.0.2",
+                "parseurl": "^1.3.1",
+                "path-to-regexp": "^1.7.0",
+                "statuses": "^1.3.1",
+                "type-is": "^1.6.15",
+                "waterline": "^0.11.11"
             }
         };
         switch (params.engine) {

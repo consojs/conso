@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/wiki/tageecc/conso/conso.png)
 
-Fast, Configurable, minimalist web framework for node.
+Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 
 [![NPM version][npm-image]][npm-url]
 [![NPM quality][quality-image]][quality-url]

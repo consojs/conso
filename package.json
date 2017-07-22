@@ -1,27 +1,32 @@
 {
-    "name": "conso",
-    "version": "0.1.18",
-    "description": "",
-    "main": "index.js",
-    "bin": {
-        "conso": "bin/conso.js"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tageecc/conso.git"
-    },
-    "author": "tagee",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/tageecc/conso/issues"
-    },
-    "homepage": "https://github.com/tageecc/conso#readme",
-    "dependencies": {
-        "chalk": "^2.0.1",
-        "commander": "^2.11.0",
-        "fs-extra": "^4.0.0"
-    }
+  "name": "conso",
+  "version": "0.2.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "conso": "bin/conso.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tageecc/conso.git"
+  },
+  "author": "tagee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tageecc/conso/issues"
+  },
+  "homepage": "https://github.com/tageecc/conso#readme",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "commander": "^2.11.0",
+    "fs-extra": "^4.0.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.3",
+    "minami": "^1.2.3"
+  }
 }

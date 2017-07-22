@@ -1,3 +1,5 @@
+'use strict';
+
 let http = require('http');
 let {resolve} = require('path');
 let fs = require('fs');
@@ -21,6 +23,9 @@ require("babel-register")({
     ]
 });
 
+/**
+ * Application
+ */
 class Application extends Emitter {
     constructor(option = {}) {
         super();
@@ -38,17 +43,36 @@ class Application extends Emitter {
         }
     }
 
+    /**
+     * start server
+     * @example new Application().run()
+     */
     run() {
         const server = http.createServer(this.handleServer.bind(this));
         return server.listen(this.port || 3000, this.afterCreate());
     }
 
+    /**
+     * Add middleware function
+     * @param fn {Function} middleware function
+     * @returns {Application} return application,for method chaining
+     * @example
+     * app.use((ctx,next)=>{
+     *      console.log('middleware')
+     * })
+     */
     use(fn) {
         if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
         this._middleware.push(fn);
         return this;
     }
 
+    /**
+     * handleServer callback
+     * @param req
+     * @param res
+     * @private
+     */
     handleServer(req, res) {
 
         this.ctx = new Context(this, req, res);
@@ -64,6 +88,13 @@ class Application extends Emitter {
         this.middleware.load(this.handleSend.bind(this));
     }
 
+    /**
+     * handle router mapping
+     * @param ctx
+     * @param next
+     * @returns {Promise.<*>}
+     * @private
+     */
     async handleRouter(ctx, next) {
         if (!ctx.app.annotations.enable) return await next();
 
@@ -103,6 +134,11 @@ class Application extends Emitter {
         }
     }
 
+    /**
+     * handle response
+     * @returns {*}
+     * @private
+     */
     handleSend() {
         let {status: code, body, res} = this.ctx;
 
@@ -145,11 +181,15 @@ class Application extends Emitter {
         this.ctx.end(body);
     }
 
+    /**
+     * after create server callback
+     * @returns {*}
+     * @private
+     */
     afterCreate() {
         console.log(`listen on port:${this.port}`);
     }
 }
-
 
 module.exports = {
     Annotation,

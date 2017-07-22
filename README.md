@@ -37,7 +37,10 @@ $ npm install conso -g
 
 ## Docs & Community
 
+>This project uses JSDoc. For the full public API documentation, clone the repository and run npm run doc. This will run JSDoc with the proper options and output the documentation to out/.
+
 Coming soon! Please expecting!
+
 
 ## Quick Start
 

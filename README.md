@@ -35,12 +35,31 @@ $ npm install conso -g
 - ✔︎ Async/Await
 - ✔︎ Database Support Using [waterline](https://github.com/balderdashy/waterline)
 
-## Docs & Community
+## Example
 
->This project uses JSDoc. For the full public API documentation, clone the repository and run npm run doc. This will run JSDoc with the proper options and output the documentation to out/.
+you can mapping `http://localhost:3000/home/user/:uid` via code below
 
-Coming soon! Please expecting!
+```javascript
+let {Annotation} = require('conso');
+let UserModel = require('../model/UserModel');
 
+let {route, get, model} = Annotation;
+
+@route('/home')
+class index {
+
+    @model(UserModel)
+    user;
+
+    @get('/user/:uid')
+    async homePage(ctx, next) {
+        let _user = await this.user.findOne({uid: ctx.params.id});
+        // await ctx.render('index', {user:_user});
+        ctx.json({user:_user});
+    }
+}
+
+```
 
 ## Quick Start
 
@@ -71,6 +90,12 @@ $ npm start
 ```
 
  Then Open `http://localhost:3000`
+
+## Docs & Community
+
+>This project uses JSDoc. For the full public API documentation, clone the repository and run npm run doc. This will run JSDoc with the proper options and output the documentation to out/.
+
+Coming soon! Please expecting!
 
 
 ## License

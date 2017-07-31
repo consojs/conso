@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Conso' application generator
-const {resolve} = require('path');
+const {resolve, basename} = require('path');
 const fse = require('fs-extra');
 const chalk = require('chalk');
 const program = require('commander');
@@ -24,7 +24,7 @@ class Generator {
 
 
         this.program
-            .command('init <projectName>')
+            .command('init [projectName]')
             .description('Create a new conso project')
             .action(this.createApplication.bind(this));
 
@@ -51,17 +51,16 @@ class Generator {
     }
 
     async createApplication(projectName) {
-        this.projectName = projectName;
-        this.project_path = resolve(projectName);
+        this.projectName = projectName || basename(process.cwd());
+        this.project_path = projectName ? resolve(projectName) : process.cwd();
 
-        if (fse.pathExistsSync(this.project_path)) {
+        fse.ensureDirSync(this.project_path);
+        if (fse.readdirSync(this.project_path).length) {
             let p = await this.prompt('\n  destination is not empty, continue? [y/N]?');
             if (!/^y|yes|ok|true$/i.test(p)) {
                 console.log(chalk.red('The wizard has been aborted'));
                 return process.exit();
             }
-
-            fse.mkdirsSync(this.project_path);
         }
 
         this.createTemplate();

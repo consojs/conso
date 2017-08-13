@@ -1,16 +1,23 @@
 sudo: false
 language: node_js
 node_js:
-  - '6'
   - '7'
   - '8'
+repo_token: C94YoWcSrQ9K6vJER1RBzPOYyE9N2I2LR
+matrix:
+  include:
+    - node_js: "8.0"
+      env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+  allow_failures:
+    # Allow the nightly installs to fail
+    - env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+sudo: false
+cache:
+  directories:
+    - node_modules
 install:
   - npm i npminstall && npminstall
 script:
-  - npm run ci
+  - npm run test-ci
 after_script:
-  - npminstall codecov && codecov
-  - travis_wait scripts/doc_travis.sh
-env:
-  global:
-  - ENCRYPTION_LABEL: a62186272189
+  - npm install codecov && codecov

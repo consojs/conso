@@ -46,7 +46,7 @@ let UserModel = require('../model/UserModel');
 let {route, get, model} = Annotation;
 
 @route('/home')
-class index {
+class Index {
 
     @model(UserModel)
     user;

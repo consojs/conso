@@ -68,7 +68,7 @@ class Index {
  - Install the executable.
 
 ```bash
-$ npm install -g conso
+$ npm install -g conso-generator
 ```
 
  - Create the app:

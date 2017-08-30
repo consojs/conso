@@ -5,7 +5,6 @@ let {resolve} = require('path');
 let fs = require('fs');
 let Emitter = require('events');
 let Stream = require('stream');
-let accepts = require('accepts');
 let statuses = require('statuses');
 let serveStatic = require('koa-static');
 let pathToRegexp = require('path-to-regexp');

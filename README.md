@@ -3,7 +3,6 @@
 Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 
 [![NPM version][npm-image]][npm-url]
-[![NPM quality][quality-image]][quality-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][codecov-image]][codecov-url]
 [![David deps][david-image]][david-url]
@@ -11,8 +10,6 @@ Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 
 [npm-image]: https://img.shields.io/npm/v/conso.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/conso
-[quality-image]: http://npm.packagequality.com/shield/conso.svg
-[quality-url]: http://packagequality.com/#?package=conso
 [travis-image]: https://img.shields.io/travis/tageecc/conso.svg?style=flat-square
 [travis-url]: https://travis-ci.org/tageecc/conso
 [codecov-image]: https://img.shields.io/codecov/c/github/tageecc/conso.svg?style=flat-square

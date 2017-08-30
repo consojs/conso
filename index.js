@@ -28,7 +28,7 @@ require("babel-register")({
 class Application extends Emitter {
     constructor(option = {}) {
         super();
-        Object.assign(this, Store.config(option.config));
+        Object.assign(this, Store.config(option));
         this._middleware = [];
 
         // auto require routes

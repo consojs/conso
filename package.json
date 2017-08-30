@@ -1,7 +1,7 @@
 {
   "name": "conso",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
   "bin": {
     "conso": "bin/conso.js"

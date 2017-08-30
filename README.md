@@ -31,6 +31,7 @@ $ npm install conso -g
 
 - ✔︎ Annotation
 - ✔︎ Dependency Injection
+- ✔   Restful API
 - ✔︎ Configurable
 - ✔︎ Async/Await
 - ✔︎ Database Support Using [waterline](https://github.com/balderdashy/waterline)

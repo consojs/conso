@@ -1,11 +1,8 @@
 {
   "name": "conso",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
-  "bin": {
-    "conso": "bin/conso.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --require test/support/env --reporter nyan --check-leaks test/ test/acceptance/ ",

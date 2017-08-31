@@ -4,8 +4,8 @@
   "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --require test/support/env --reporter nyan --check-leaks test/ test/acceptance/ ",
+    "test": "mocha --reporter nyan",
+    "lint": "eslint lib test --fix",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha --reporter nyan && rm -rf ./coverage"
   },

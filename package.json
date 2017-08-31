@@ -4,10 +4,9 @@
   "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter nyan",
+    "test": "node_modules/.bin/_mocha --reporter nyan",
     "lint": "eslint lib test --fix",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha --reporter nyan && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -46,6 +45,9 @@
     "waterline": "^0.11.11"
   },
   "devDependencies": {
+    "codecov": "^2.3.0",
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.5.0",
     "supertest": "^3.0.0"
   }
 }

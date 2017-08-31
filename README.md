@@ -4,7 +4,6 @@ Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
 [![David deps][david-image]][david-url]
 [![NPM download][download-image]][download-url]
 
@@ -12,8 +11,6 @@ Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 [npm-url]: https://npmjs.org/package/conso
 [travis-image]: https://img.shields.io/travis/consojs/conso.svg?style=flat-square
 [travis-url]: https://travis-ci.org/consojs/conso
-[codecov-image]: https://img.shields.io/codecov/c/github/consojs/conso.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/consojs/conso
 [david-image]: https://img.shields.io/david/consojs/conso.svg?style=flat-square
 [david-url]: https://david-dm.org/consojs/conso
 [download-image]: https://img.shields.io/npm/dm/conso.svg?style=flat-square

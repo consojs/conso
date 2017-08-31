@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node_modules/.bin/_mocha --reporter nyan",
     "lint": "eslint lib test --fix",
-    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",

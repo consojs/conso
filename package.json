@@ -1,6 +1,6 @@
 {
   "name": "conso",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
   "scripts": {
@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "codecov": "^2.3.0",
+    "eslint": "^4.5.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.5.0",
     "supertest": "^3.0.0"

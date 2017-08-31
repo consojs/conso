@@ -10,12 +10,12 @@ Fast, Configurable, Intelligent web framework for [node](http://nodejs.org).
 
 [npm-image]: https://img.shields.io/npm/v/conso.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/conso
-[travis-image]: https://img.shields.io/travis/tageecc/conso.svg?style=flat-square
-[travis-url]: https://travis-ci.org/tageecc/conso
-[codecov-image]: https://img.shields.io/codecov/c/github/tageecc/conso.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/tageecc/conso
-[david-image]: https://img.shields.io/david/tageecc/conso.svg?style=flat-square
-[david-url]: https://david-dm.org/tageecc/conso
+[travis-image]: https://img.shields.io/travis/consojs/conso.svg?style=flat-square
+[travis-url]: https://travis-ci.org/consojs/conso
+[codecov-image]: https://img.shields.io/codecov/c/github/consojs/conso.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/consojs/conso
+[david-image]: https://img.shields.io/david/consojs/conso.svg?style=flat-square
+[david-url]: https://david-dm.org/consojs/conso
 [download-image]: https://img.shields.io/npm/dm/conso.svg?style=flat-square
 [download-url]: https://npmjs.org/package/conso
 

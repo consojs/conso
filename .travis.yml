@@ -8,7 +8,12 @@ env:
     - CODECOV_TOKEN: 8ba87593-bf31-4743-999e-49e5fafdb3f3
 cache:
   directories:
+    - wrk/bin
     - node_modules
+before_script:
+  - npm prune
+  - "[ ! -f wrk/bin/wrk ] && rm -rf wrk && git clone https://github.com/wg/wrk.git && make -C wrk && mkdir wrk/bin && mv wrk/wrk wrk/bin || true"
+  - export PATH=$PATH:$PWD/wrk/bin/
 script:
   - npm run lint
   - npm run test

@@ -121,9 +121,9 @@ class Application extends Emitter {
             });
 
             if (ctx.app.DBConfig) {
-                ctx.database = ctx.database || await Database();
+                Store.database = Store.database || await Database();
                 handleRouter.model && handleRouter.model.map(item => {
-                    handleClass[item.key] = ctx.database.collections[item.key];
+                    handleClass[item.key] = Store.database.collections[item.key];
                 });
             }
 

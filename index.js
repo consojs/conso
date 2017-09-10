@@ -30,7 +30,10 @@ class Application extends Emitter {
         super();
         Object.assign(this, Store.config(option));
         this._middleware = [];
-
+        // init database
+        if (this.DBConfig) {
+            Store.database = Store.database || Database();
+        }
         // auto require routes
         if (this.annotations.enable) {
             let baseDir = resolve(this.annotations.basePackage);
@@ -39,10 +42,6 @@ class Application extends Emitter {
                 let filePath = resolve(this.annotations.basePackage, file);
                 Util.autoLoad(filePath);
             });
-        }
-
-        if (this.DBConfig) {
-            Store.database = Store.database || Database();
         }
     }
 

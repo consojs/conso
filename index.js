@@ -40,6 +40,10 @@ class Application extends Emitter {
                 Util.autoLoad(filePath);
             });
         }
+
+        if (this.DBConfig) {
+            Store.database = Store.database || Database();
+        }
     }
 
     /**
@@ -121,7 +125,6 @@ class Application extends Emitter {
             });
 
             if (ctx.app.DBConfig) {
-                Store.database = Store.database || await Database();
                 handleRouter.model && handleRouter.model.map(item => {
                     handleClass[item.key] = Store.database.collections[item.key];
                 });

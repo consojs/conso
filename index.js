@@ -124,9 +124,7 @@ class Application extends Emitter {
             });
 
             if (ctx.app.DBConfig) {
-                handleRouter.model && handleRouter.model.map(item => {
-                    handleClass[item.key] = Store.collection[item.key];
-                });
+                handleRouter.model && handleRouter.model.map(item => handleClass[item.key] = Store.models[item.key]);
             }
 
             if (handleMethod) {

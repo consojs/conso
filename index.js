@@ -30,10 +30,6 @@ class Application extends Emitter {
         super();
         Object.assign(this, Store.config(option));
         this._middleware = [];
-        // init database
-        if (this.DBConfig) {
-            Store.database = Store.database || Database();
-        }
         // auto require routes
         if (this.annotations.enable) {
             let baseDir = resolve(this.annotations.basePackage);
@@ -42,6 +38,10 @@ class Application extends Emitter {
                 let filePath = resolve(this.annotations.basePackage, file);
                 Util.autoLoad(filePath);
             });
+        }
+        // init database
+        if (this.DBConfig) {
+            Store.database = Store.database || Database();
         }
     }
 
@@ -122,9 +122,8 @@ class Application extends Emitter {
                     params_key.map((key, index) => ctx.params[key.name] = match[index + 1])
                 }
             });
-
             if (ctx.app.DBConfig) {
-                handleRouter.model && handleRouter.model.map(item => handleClass[item.key] = Store.models[item.key]);
+                handleRouter.model && handleRouter.model.map(item => handleClass[item.key] = Store.Collection[item.key]);
             }
 
             if (handleMethod) {

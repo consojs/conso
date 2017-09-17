@@ -1,6 +1,6 @@
 {
   "name": "conso",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Fast, Configurable, Intelligent web framework for node.",
   "main": "index.js",
   "scripts": {

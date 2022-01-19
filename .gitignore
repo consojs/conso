@@ -30,3 +30,8 @@ benchmarks/graphs
 .idea
 .DS_Store
 .tmp
+
+# build
+/build
+
+/package-lock.json
